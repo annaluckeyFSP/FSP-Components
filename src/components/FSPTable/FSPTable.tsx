@@ -24,6 +24,10 @@ export interface FSPTableProps {
   className?: string;
   onRowClick?: (row: any, index: number) => void;
   onSort?: (column: string, direction: 'asc' | 'desc') => void;
+  // Responsive options
+  responsive?: boolean;
+  mobileLayout?: 'two-column' | 'stacked';
+  mobileBreakpoint?: number;
 }
 
 const TableContainer = styled.div<{ noTopMargin?: boolean; noBottomMargin?: boolean }>`
@@ -38,9 +42,17 @@ const StyledTable = styled.table<{
   tight?: boolean;
   contentTopAligned?: boolean;
   clickableRows?: boolean;
+  responsive?: boolean;
+  breakpoint?: number;
 }>`
   width: 100%;
   border-collapse: collapse;
+  
+  ${props => props.responsive && `
+    @media (max-width: ${props.breakpoint || 768}px) {
+      display: none;
+    }
+  `}
   
   ${props => props.tight && `
     td {
@@ -161,6 +173,106 @@ const LoadingSpinner = styled.div`
   font-size: 14px;
 `;
 
+// Responsive table components
+const ResponsiveTable = styled.div<{ mobileLayout?: string; breakpoint?: number }>`
+  display: none;
+  
+  @media (max-width: ${props => props.breakpoint || 768}px) {
+    display: block;
+  }
+`;
+
+const MobileTableContainer = styled.div<{ mobileLayout?: string }>`
+  ${props => props.mobileLayout === 'two-column' && `
+    .mobile-table-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 20px;
+      align-items: start;
+      
+      &:not(:last-child) {
+        margin-bottom: 15px;
+      }
+    }
+  `}
+  
+  ${props => props.mobileLayout === 'stacked' && `
+    .mobile-table-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      align-items: start;
+      
+      &:not(:last-child) {
+        margin-bottom: 15px;
+      }
+    }
+  `}
+`;
+
+const MobileTableRow = styled.div`
+  display: grid;
+  align-items: start;
+  
+  &:not(:last-child) {
+    margin-bottom: 15px;
+  }
+`;
+
+const MobileTableItem = styled.div`
+  border-bottom: 1px solid var(--gray3, #e5e5e5);
+  padding: 15px 20px;
+  
+  &:first-of-type {
+    border-top: 1px solid var(--gray3, #e5e5e5);
+    margin-top: 15px;
+  }
+`;
+
+const MobileLabel = styled.label`
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--gray1, #595959);
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 0;
+  font-family: var(--mainFont, 'Roboto', Arial, Helvetica, sans-serif);
+`;
+
+const MobileValue = styled.div`
+  font-size: 14px;
+  line-height: 16px;
+  color: var(--black, #000000);
+  font-family: var(--mainFont, 'Roboto', Arial, Helvetica, sans-serif);
+  word-wrap: break-word;
+  
+  a {
+    color: var(--blue, #1374c9);
+    text-decoration: underline;
+    
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  
+  b {
+    background-color: var(--yellow, #fffba3);
+    font-weight: bold;
+  }
+  
+  .warning {
+    color: var(--orange, #dc7418);
+    font-weight: bold;
+  }
+  
+  .expired,
+  .misconfigured,
+  .error {
+    color: var(--red, #d72919);
+    font-weight: bold;
+  }
+`;
+
 const StatusBox = styled.div<{ status: 'green' | 'gray' | 'light-green' | 'light-gray' | 'light-orange' | 'orange' }>`
   border-radius: 3px;
   color: var(--white, #ffffff);
@@ -231,6 +343,9 @@ export const FSPTable: React.FC<FSPTableProps> = ({
   className,
   onRowClick,
   onSort,
+  responsive = false,
+  mobileLayout = 'two-column',
+  mobileBreakpoint = 768,
 }) => {
   const [sortColumn, setSortColumn] = React.useState<string | null>(null);
   const [sortDirection, setSortDirection] = React.useState<'asc' | 'desc'>('asc');
@@ -247,6 +362,36 @@ export const FSPTable: React.FC<FSPTableProps> = ({
       return column.render(row[column.key], row);
     }
     return row[column.key];
+  };
+
+  const renderMobileTable = () => {
+    if (!responsive || !data || data.length === 0) return null;
+
+    return (
+      <ResponsiveTable mobileLayout={mobileLayout} breakpoint={mobileBreakpoint}>
+        <MobileTableContainer mobileLayout={mobileLayout}>
+          {data.map((row, rowIndex) => (
+            <MobileTableItem key={rowIndex}>
+              {columns.map((column) => (
+                <MobileTableRow 
+                  key={column.key} 
+                  className="mobile-table-row"
+                  onClick={() => clickableRows && onRowClick?.(row, rowIndex)}
+                  style={{ cursor: clickableRows ? 'pointer' : 'default' }}
+                >
+                  <MobileLabel className="secondary-text">
+                    {column.label}
+                  </MobileLabel>
+                  <MobileValue>
+                    {renderCell(column, row, rowIndex)}
+                  </MobileValue>
+                </MobileTableRow>
+              ))}
+            </MobileTableItem>
+          ))}
+        </MobileTableContainer>
+      </ResponsiveTable>
+    );
   };
 
   if (loading) {
@@ -278,6 +423,8 @@ export const FSPTable: React.FC<FSPTableProps> = ({
         tight={tight}
         contentTopAligned={contentTopAligned}
         clickableRows={clickableRows}
+        responsive={responsive}
+        breakpoint={mobileBreakpoint}
       >
         <thead>
           <tr>
@@ -317,6 +464,7 @@ export const FSPTable: React.FC<FSPTableProps> = ({
           ))}
         </tbody>
       </StyledTable>
+      {renderMobileTable()}
     </TableContainer>
   );
 };

@@ -25,6 +25,16 @@ const meta: Meta<typeof FSPTable> = {
     loading: {
       control: { type: 'boolean' },
     },
+    responsive: {
+      control: { type: 'boolean' },
+    },
+    mobileLayout: {
+      control: { type: 'select' },
+      options: ['two-column', 'stacked'],
+    },
+    mobileBreakpoint: {
+      control: { type: 'number' },
+    },
   },
   tags: ['autodocs'],
 };
@@ -33,7 +43,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // Sample data
-const sampleData = [
+const basicData = [
   {
     id: 1,
     name: 'John Doe',
@@ -41,7 +51,6 @@ const sampleData = [
     status: 'active',
     role: 'Admin',
     lastLogin: '2024-01-15',
-    actions: 'edit'
   },
   {
     id: 2,
@@ -50,7 +59,6 @@ const sampleData = [
     status: 'inactive',
     role: 'User',
     lastLogin: '2024-01-10',
-    actions: 'edit'
   },
   {
     id: 3,
@@ -59,11 +67,70 @@ const sampleData = [
     status: 'pending',
     role: 'Manager',
     lastLogin: '2024-01-12',
-    actions: 'edit'
   }
 ];
 
-const columns = [
+const actionData = [
+  {
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+    status: 'active',
+  },
+  {
+    name: 'Jane Smith',
+    email: 'jane.smith@example.com',
+    status: 'inactive',
+  },
+  {
+    name: 'Bob Johnson',
+    email: 'bob.johnson@example.com',
+    status: 'pending',
+  }
+];
+
+const complexData = [
+  {
+    id: 1,
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+    status: 'active',
+    role: 'Admin',
+    lastLogin: '2024-01-15',
+    department: 'Engineering',
+  },
+  {
+    id: 2,
+    name: 'Jane Smith',
+    email: 'jane.smith@example.com',
+    status: 'inactive',
+    role: 'User',
+    lastLogin: '2024-01-10',
+    department: 'Marketing',
+  },
+  {
+    id: 3,
+    name: 'Bob Johnson',
+    email: 'bob.johnson@example.com',
+    status: 'pending',
+    role: 'Manager',
+    lastLogin: '2024-01-12',
+    department: 'Sales',
+  },
+  {
+    id: 4,
+    name: 'Alice Brown',
+    email: 'alice.brown@example.com',
+    status: 'active',
+    role: 'User',
+    lastLogin: '2024-01-14',
+    department: 'HR',
+  }
+];
+
+// Legacy data for backward compatibility
+const sampleData = basicData;
+
+const basicColumns = [
   {
     key: 'id',
     label: 'ID',
@@ -100,6 +167,29 @@ const columns = [
     label: 'Last Login',
     sortable: true,
   },
+];
+
+const actionColumns = [
+  {
+    key: 'name',
+    label: 'Name',
+    sortable: true,
+  },
+  {
+    key: 'email',
+    label: 'Email',
+    sortable: true,
+  },
+  {
+    key: 'status',
+    label: 'Status',
+    align: 'center' as const,
+    render: (value: string) => (
+      <StatusBox status={value === 'active' ? 'green' : value === 'inactive' ? 'gray' : 'light-orange'}>
+        {value.charAt(0).toUpperCase()}
+      </StatusBox>
+    ),
+  },
   {
     key: 'actions',
     label: 'Actions',
@@ -111,6 +201,63 @@ const columns = [
     ),
   },
 ];
+
+const complexColumns = [
+  {
+    key: 'id',
+    label: 'ID',
+    width: '60px',
+    align: 'center' as const,
+  },
+  {
+    key: 'name',
+    label: 'Name',
+    sortable: true,
+  },
+  {
+    key: 'email',
+    label: 'Email',
+    sortable: true,
+  },
+  {
+    key: 'status',
+    label: 'Status',
+    align: 'center' as const,
+    render: (value: string) => (
+      <StatusBox status={value === 'active' ? 'green' : value === 'inactive' ? 'gray' : 'light-orange'}>
+        {value.charAt(0).toUpperCase()}
+      </StatusBox>
+    ),
+  },
+  {
+    key: 'role',
+    label: 'Role',
+    sortable: true,
+  },
+  {
+    key: 'lastLogin',
+    label: 'Last Login',
+    sortable: true,
+  },
+  {
+    key: 'department',
+    label: 'Department',
+    sortable: true,
+  },
+  {
+    key: 'actions',
+    label: 'Actions',
+    align: 'center' as const,
+    render: () => (
+      <FSPButton variant="secondary" size="default">
+        Edit
+      </FSPButton>
+    ),
+  },
+];
+
+// Legacy columns for backward compatibility
+const columns = basicColumns;
 
 export const Basic: Story = {
   args: {
@@ -295,6 +442,49 @@ export const ComplexData: Story = {
     ],
     striped: true,
     clickableRows: true,
+  },
+};
+
+export const ResponsiveTwoColumn: Story = {
+  args: {
+    columns: basicColumns,
+    data: basicData,
+    responsive: true,
+    mobileLayout: 'two-column',
+    mobileBreakpoint: 768,
+  },
+};
+
+export const ResponsiveStacked: Story = {
+  args: {
+    columns: basicColumns,
+    data: basicData,
+    responsive: true,
+    mobileLayout: 'stacked',
+    mobileBreakpoint: 768,
+  },
+};
+
+export const ResponsiveWithActions: Story = {
+  args: {
+    columns: actionColumns,
+    data: actionData,
+    responsive: true,
+    mobileLayout: 'two-column',
+    mobileBreakpoint: 768,
+    clickableRows: true,
+    onRowClick: (row) => alert(`Clicked: ${row.name}`),
+  },
+};
+
+export const ResponsiveComplex: Story = {
+  args: {
+    columns: complexColumns,
+    data: complexData,
+    responsive: true,
+    mobileLayout: 'two-column',
+    mobileBreakpoint: 768,
+    striped: true,
   },
 };
 
