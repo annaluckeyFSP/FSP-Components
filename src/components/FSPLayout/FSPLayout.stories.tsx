@@ -3,7 +3,8 @@ import { FSPLayout } from './FSPLayout';
 import { FSPButton } from '../FSPButton/FSPButton';
 import { FSPPageHeader } from '../FSPPageHeader/FSPPageHeader';
 import { FSPContainer } from '../FSPContainer/FSPContainer';
-import { useState } from 'react';
+import { FSPBreadcrumb, FSPBreadcrumbWrapper } from '../FSPBreadcrumb/FSPBreadcrumb';
+import React, { useState } from 'react';
 
 const meta: Meta<typeof FSPLayout> = {
   title: 'FSP/Layout',
@@ -44,7 +45,6 @@ const HeaderContent = ({ onToggleSidebar, sidebarOpen }: { onToggleSidebar?: () 
     justifyContent: 'space-between', 
     alignItems: 'center', 
     padding: '10px 20px',
-    borderBottom: '1px solid var(--gray3, #d9d9d9)',
     backgroundColor: 'var(--white, #ffffff)'
   }}>
     <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
@@ -55,25 +55,43 @@ const HeaderContent = ({ onToggleSidebar, sidebarOpen }: { onToggleSidebar?: () 
           border: 'none', 
           cursor: 'pointer',
           fontSize: '18px',
-          color: 'var(--black, #000000)'
+          color: 'var(--black, #000000)',
+          padding: '0',
+          margin: '0',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-start'
         }}
       >
         ☰
       </button>
-      <h2 style={{ margin: 0, fontSize: '20px' }}>FSP Application</h2>
+      <h3 style={{ margin: 0, fontSize: '20px', fontWeight: 'normal' }}>FSP Application</h3>
     </div>
-    <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-      <span>User Name</span>
-      <button style={{ 
-        background: 'var(--blue, #1376CD)', 
-        color: 'white', 
-        border: 'none', 
-        padding: '8px 16px',
-        borderRadius: '4px',
-        cursor: 'pointer'
+    <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+      <a href="#" style={{ 
+        color: 'var(--gray1, #595959)', 
+        textDecoration: 'none',
+        fontSize: '14px',
+        fontFamily: 'var(--mainFont, "Roboto", Arial, Helvetica, sans-serif)'
+      }}>
+        Help
+      </a>
+      <a href="#" style={{ 
+        color: 'var(--gray1, #595959)', 
+        textDecoration: 'none',
+        fontSize: '14px',
+        fontFamily: 'var(--mainFont, "Roboto", Arial, Helvetica, sans-serif)'
       }}>
         Settings
-      </button>
+      </a>
+      <a href="#" style={{ 
+        color: 'var(--gray1, #595959)', 
+        textDecoration: 'none',
+        fontSize: '14px',
+        fontFamily: 'var(--mainFont, "Roboto", Arial, Helvetica, sans-serif)'
+      }}>
+        Username
+      </a>
     </div>
   </div>
 );
@@ -138,6 +156,31 @@ export const WithoutSidebar: Story = {
           <h3>No Sidebar</h3>
           <p>This layout doesn't include a sidebar navigation.</p>
         </div>
+      </FSPContainer>
+    ),
+  },
+};
+
+export const WithBreadcrumb: Story = {
+  args: {
+    sidebar: <SidebarContent />,
+    header: <HeaderContent />,
+    children: (
+      <FSPContainer>
+        <FSPBreadcrumbWrapper
+          breadcrumb={
+            <FSPBreadcrumb 
+              previousPage="Dashboard" 
+              onBack={() => console.log('Back to Dashboard')}
+            />
+          }
+        >
+          <FSPPageHeader title="Student Details" />
+          <div style={{ padding: '20px', backgroundColor: 'var(--gray5, #fafafa)', borderRadius: '8px' }}>
+            <h3>Student Information</h3>
+            <p>This shows how the breadcrumb appears between the header and page title without moving the H1.</p>
+          </div>
+        </FSPBreadcrumbWrapper>
       </FSPContainer>
     ),
   },

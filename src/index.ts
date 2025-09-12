@@ -15,3 +15,4 @@ export * from './components/FSPContainer/FSPContainer';
 export * from './components/FSPGrid/FSPGrid';
 export * from './components/FSPFlex/FSPFlex';
 export * from './components/FSPSpacing/FSPSpacing';
+export * from './components/FSPBreadcrumb/FSPBreadcrumb';
