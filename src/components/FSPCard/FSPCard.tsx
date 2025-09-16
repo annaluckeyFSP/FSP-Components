@@ -68,7 +68,9 @@ const getCardStyles = (variant: FSPCardProps['variant']) => {
   `;
 };
 
-const StyledCard = styled.div<FSPCardProps>`
+const StyledCard = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['variant', 'noMargin', 'onClick'].includes(prop),
+})<FSPCardProps>`
   ${({ variant }) => getCardStyles(variant)}
   ${({ noMargin }) => noMargin && 'margin-bottom: 0;'}
   ${({ onClick }) => onClick && 'cursor: pointer;'}
@@ -144,7 +146,9 @@ const CardHeader = styled.div.withConfig({
   }
 `;
 
-const CardContent = styled.div<FSPCardContentProps>`
+const CardContent = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['noPadding', 'gridLayout'].includes(prop),
+})<FSPCardContentProps>`
   padding: ${props => props.noPadding ? '0' : '20px'};
   background-color: inherit;
   
@@ -169,7 +173,9 @@ const CardContent = styled.div<FSPCardContentProps>`
   }
 `;
 
-const CardActions = styled.div`
+const CardActions = styled.div.withConfig({
+  shouldForwardProp: (prop) => true,
+})`
   display: flex;
   align-items: center;
   gap: 10px;
@@ -213,7 +219,7 @@ export const FSPCard: React.FC<FSPCardProps> = ({
           {header}
         </CardHeader>
       )}
-      <CardContent noPadding={noPadding}>
+      <CardContent noPadding={!!noPadding}>
         {children}
       </CardContent>
     </StyledCard>

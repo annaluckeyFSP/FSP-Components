@@ -286,12 +286,10 @@ export const FSPInput: React.FC<FSPInputProps> = ({
   };
 
   const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-    setIsFocused(true);
     onFocus?.(event);
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    setIsFocused(false);
     onBlur?.(event);
   };
 

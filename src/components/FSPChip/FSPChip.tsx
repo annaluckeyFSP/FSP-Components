@@ -121,7 +121,9 @@ const ChipContent = styled.span`
   gap: 5px;
 `;
 
-const RemoveButton = styled.button`
+const RemoveButton = styled.button.withConfig({
+  shouldForwardProp: (prop) => true,
+})`
   background: none;
   border: none;
   color: inherit;
