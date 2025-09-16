@@ -261,13 +261,9 @@ export const FSPInput: React.FC<FSPInputProps> = ({
   noMarginTop = false,
   noMarginBottom = false,
   icon,
-  iconTooltip,
-  iconTooltipPosition = 'after',
   prefix,
   suffix,
   currencySymbol,
-  allowNegative = false,
-  placesAfterDecimal,
   showCounter = false,
   counterPosition = 'bottom',
   hasError = false,
@@ -278,7 +274,6 @@ export const FSPInput: React.FC<FSPInputProps> = ({
   autoComplete,
 }) => {
   const [internalValue, setInternalValue] = React.useState(value);
-  const [isFocused, setIsFocused] = React.useState(false);
 
   React.useEffect(() => {
     setInternalValue(value);
@@ -320,9 +315,9 @@ export const FSPInput: React.FC<FSPInputProps> = ({
         <Label
           htmlFor={id}
           size={labelSize}
-          required={required}
-          disabled={disabled}
-          error={showError}
+          required={!!required}
+          disabled={!!disabled}
+          error={!!showError}
           position={labelPosition}
         >
           {required && <span className="required-asterisk">*</span>}
@@ -332,10 +327,10 @@ export const FSPInput: React.FC<FSPInputProps> = ({
       )}
       
       <InputWrapper
-        fullWidth={fullWidth}
-        hasError={showError}
-        disabled={disabled}
-        grayWhenDisabled={grayWhenDisabled}
+        fullWidth={!!fullWidth}
+        hasError={!!showError}
+        disabled={!!disabled}
+        grayWhenDisabled={!!grayWhenDisabled}
         hasPrefix={!!(prefix || currencySymbol)}
         hasSuffix={!!(suffix || (showCounter && counterPosition === 'inline'))}
       >

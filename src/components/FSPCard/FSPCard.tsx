@@ -207,8 +207,8 @@ export const FSPCard: React.FC<FSPCardProps> = ({
       {header && (
         <CardHeader
           variant={variant}
-          isEditing={isEditing}
-          dynamicHeight={dynamicHeight}
+          isEditing={!!isEditing}
+          dynamicHeight={!!dynamicHeight}
         >
           {header}
         </CardHeader>

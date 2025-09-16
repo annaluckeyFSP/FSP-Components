@@ -192,8 +192,8 @@ export const ButtonGrid: Story = {
       <>
         <FSPButton variant="primary" fullWidth>Primary</FSPButton>
         <FSPButton variant="secondary" fullWidth>Secondary</FSPButton>
-        <FSPButton variant="outline" fullWidth>Outline</FSPButton>
-        <FSPButton variant="ghost" fullWidth>Ghost</FSPButton>
+        <FSPButton variant="white" fullWidth>White</FSPButton>
+        <FSPButton variant="secondary" fullWidth>Secondary</FSPButton>
       </>
     ),
   },
