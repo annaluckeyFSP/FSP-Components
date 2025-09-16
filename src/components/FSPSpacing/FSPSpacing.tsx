@@ -4,6 +4,7 @@ import styled from 'styled-components';
 export interface FSPSpacingProps {
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   margin?: number | string;
   marginTop?: number | string;
   marginRight?: number | string;
@@ -18,6 +19,9 @@ export interface FSPSpacingProps {
   fullWidth?: boolean;
   fullHeight?: boolean;
   display?: 'block' | 'inline' | 'inline-block' | 'flex' | 'grid' | 'none';
+  flexDirection?: 'row' | 'column' | 'row-reverse' | 'column-reverse';
+  justifyContent?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly';
+  alignItems?: 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'stretch';
 }
 
 const SpacingWrapper = styled.div<{
@@ -35,6 +39,9 @@ const SpacingWrapper = styled.div<{
   fullWidth?: boolean;
   fullHeight?: boolean;
   display?: string;
+  flexDirection?: string;
+  justifyContent?: string;
+  alignItems?: string;
 }>`
   width: ${props => props.fullWidth ? '100%' : 'auto'};
   height: ${props => props.fullHeight ? '100%' : 'auto'};
@@ -86,11 +93,25 @@ const SpacingWrapper = styled.div<{
   ${props => props.gap !== undefined && `
     gap: ${typeof props.gap === 'number' ? `${props.gap}px` : props.gap};
   `}
+  
+  /* Flex properties */
+  ${props => props.flexDirection && `
+    flex-direction: ${props.flexDirection};
+  `}
+  
+  ${props => props.justifyContent && `
+    justify-content: ${props.justifyContent};
+  `}
+  
+  ${props => props.alignItems && `
+    align-items: ${props.alignItems};
+  `}
 `;
 
 export const FSPSpacing: React.FC<FSPSpacingProps> = ({
   children,
   className,
+  style,
   margin,
   marginTop,
   marginRight,
@@ -104,11 +125,15 @@ export const FSPSpacing: React.FC<FSPSpacingProps> = ({
   gap,
   fullWidth = false,
   fullHeight = false,
-  display
+  display,
+  flexDirection,
+  justifyContent,
+  alignItems
 }) => {
   return (
     <SpacingWrapper
       className={className}
+      style={style}
       margin={margin}
       marginTop={marginTop}
       marginRight={marginRight}
@@ -123,6 +148,9 @@ export const FSPSpacing: React.FC<FSPSpacingProps> = ({
       fullWidth={fullWidth}
       fullHeight={fullHeight}
       display={display}
+      flexDirection={flexDirection}
+      justifyContent={justifyContent}
+      alignItems={alignItems}
     >
       {children}
     </SpacingWrapper>

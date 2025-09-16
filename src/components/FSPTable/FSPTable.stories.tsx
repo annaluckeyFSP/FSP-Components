@@ -398,7 +398,7 @@ export const ComplexData: Story = {
         key: 'actions', 
         label: 'Actions', 
         align: 'center' as const,
-        render: (row: any) => (
+        render: () => (
           <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
             <FSPButton variant="primary" size="default">Edit</FSPButton>
             <FSPButton variant="red" size="default">Delete</FSPButton>

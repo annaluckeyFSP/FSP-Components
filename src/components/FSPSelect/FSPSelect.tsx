@@ -119,7 +119,9 @@ const Label = styled.label<{
   }
 `;
 
-const SelectWrapper = styled.div<{
+const SelectWrapper = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['fullWidth', 'hasError', 'disabled', 'grayBackground', 'grayWhenDisabled', 'removeMinWidth', 'preventFullWidthOnMobile'].includes(prop),
+})<{
   fullWidth?: boolean;
   hasError?: boolean;
   disabled?: boolean;
@@ -137,7 +139,9 @@ const SelectWrapper = styled.div<{
   }
 `;
 
-const CustomSelect = styled.div<{
+const CustomSelect = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['hasError', 'disabled', 'grayBackground', 'grayWhenDisabled', 'isOpen'].includes(prop),
+})<{
   hasError?: boolean;
   disabled?: boolean;
   grayBackground?: boolean;

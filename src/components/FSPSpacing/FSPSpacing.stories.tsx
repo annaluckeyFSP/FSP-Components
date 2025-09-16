@@ -199,7 +199,7 @@ export const ButtonSpacing: Story = {
       <>
         <FSPButton variant="primary">Primary</FSPButton>
         <FSPButton variant="secondary">Secondary</FSPButton>
-        <FSPButton variant="outline">Outline</FSPButton>
+        <FSPButton variant="white">White</FSPButton>
       </>
     ),
   },

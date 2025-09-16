@@ -357,7 +357,7 @@ export const FSPTable: React.FC<FSPTableProps> = ({
     onSort?.(column, newDirection);
   };
 
-  const renderCell = (column: TableColumn, row: any, rowIndex: number) => {
+  const renderCell = (column: TableColumn, row: any) => {
     if (column.render) {
       return column.render(row[column.key], row);
     }
@@ -383,7 +383,7 @@ export const FSPTable: React.FC<FSPTableProps> = ({
                     {column.label}
                   </MobileLabel>
                   <MobileValue>
-                    {renderCell(column, row, rowIndex)}
+                    {renderCell(column, row)}
                   </MobileValue>
                 </MobileTableRow>
               ))}
@@ -457,7 +457,7 @@ export const FSPTable: React.FC<FSPTableProps> = ({
                   key={column.key}
                   align={column.align}
                 >
-                  {renderCell(column, row, rowIndex)}
+                  {renderCell(column, row)}
                 </TableCell>
               ))}
             </TableRow>
