@@ -122,7 +122,7 @@ const ChipContent = styled.span`
 `;
 
 const RemoveButton = styled.button.withConfig({
-  shouldForwardProp: (prop) => true,
+  shouldForwardProp: () => true,
 })`
   background: none;
   border: none;
@@ -156,8 +156,7 @@ export const FSPChip: React.FC<FSPChipProps> = ({
   count,
   ...props
 }) => {
-  const handleClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleClick = () => {
     onClick?.();
   };
 

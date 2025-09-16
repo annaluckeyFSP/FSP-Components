@@ -17,7 +17,7 @@ export interface FSPCardHeaderProps {
   children: React.ReactNode;
   actions?: React.ReactNode;
   className?: string;
-  variant?: 'default' | 'border' | 'primary' | 'danger' | 'warning';
+  variant?: 'default' | 'border' | 'primary' | 'white' | 'danger' | 'warning';
   isEditing?: boolean;
   dynamicHeight?: boolean;
 }
@@ -115,6 +115,12 @@ const CardHeader = styled.div.withConfig({
     border-top-left-radius: 4px;
   `}
   
+  ${props => props.variant === 'white' && `
+    background-color: var(--white, #ffffff);
+    border-left: 4px solid var(--gray3, #e5e5e5);
+    border-top-left-radius: 4px;
+  `}
+  
   ${props => props.isEditing && `
     border-top-left-radius: 3px;
     border-left: 4px solid var(--blue, #1374c9);
@@ -174,7 +180,7 @@ const CardContent = styled.div.withConfig({
 `;
 
 const CardActions = styled.div.withConfig({
-  shouldForwardProp: (prop) => true,
+  shouldForwardProp: () => true,
 })`
   display: flex;
   align-items: center;

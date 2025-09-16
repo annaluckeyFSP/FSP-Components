@@ -78,9 +78,8 @@ export const FSPBreadcrumb: React.FC<FSPBreadcrumbProps> = ({
   className,
   href
 }) => {
-  const handleClick = (e: React.MouseEvent) => {
+  const handleClick = () => {
     if (onBack) {
-      e.preventDefault();
       onBack();
     }
   };
