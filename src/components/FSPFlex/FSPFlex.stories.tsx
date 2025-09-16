@@ -154,7 +154,7 @@ export const ButtonGroup: Story = {
       <>
         <FSPButton variant="primary">Save</FSPButton>
         <FSPButton variant="secondary">Cancel</FSPButton>
-        <FSPButton variant="outline">Reset</FSPButton>
+        <FSPButton variant="white">Reset</FSPButton>
       </>
     ),
   },
@@ -190,7 +190,7 @@ export const FormLayout: Story = {
             }} 
           />
         </div>
-        <FSPFlex justifyContent="flex-end" gap={10}>
+        <FSPFlex justifyContent="end" gap={10}>
           <FSPButton variant="secondary">Cancel</FSPButton>
           <FSPButton variant="primary">Submit</FSPButton>
         </FSPFlex>

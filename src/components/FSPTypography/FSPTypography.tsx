@@ -8,6 +8,7 @@ export interface FSPTypographyProps {
   align?: 'left' | 'center' | 'right';
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   as?: keyof JSX.IntrinsicElements;
   underline?: boolean;
   noMargin?: boolean;
@@ -135,6 +136,7 @@ export const FSPTypography: React.FC<FSPTypographyProps> = ({
   align,
   children,
   className,
+  style,
   as,
   underline = false,
   noMargin = false,
@@ -152,6 +154,7 @@ export const FSPTypography: React.FC<FSPTypographyProps> = ({
       underline={underline}
       noMargin={noMargin}
       className={className}
+      style={style}
       {...props}
     >
       {children}

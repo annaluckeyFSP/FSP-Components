@@ -31,14 +31,15 @@ const meta: Meta<typeof FSPGrid> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const GridItem = ({ children, color = 'var(--blue, #1376CD)' }: { children: React.ReactNode; color?: string }) => (
+const GridItem = ({ children, color = 'var(--blue, #1376CD)', style }: { children: React.ReactNode; color?: string; style?: React.CSSProperties }) => (
   <div style={{
     backgroundColor: color,
     color: 'white',
     padding: '20px',
     borderRadius: '4px',
     textAlign: 'center',
-    fontWeight: '500'
+    fontWeight: '500',
+    ...style
   }}>
     {children}
   </div>

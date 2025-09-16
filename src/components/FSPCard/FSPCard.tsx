@@ -78,7 +78,9 @@ const StyledCard = styled.div<FSPCardProps>`
   }
 `;
 
-const CardHeader = styled.div<FSPCardHeaderProps>`
+const CardHeader = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['variant', 'isEditing', 'dynamicHeight'].includes(prop),
+})<FSPCardHeaderProps>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -256,12 +258,13 @@ export const FSPCardContent: React.FC<FSPCardContentProps> = ({
   );
 };
 
-export const FSPCardInfo: React.FC<{ children: React.ReactNode; className?: string }> = ({
+export const FSPCardInfo: React.FC<{ children: React.ReactNode; className?: string; gridLayout?: boolean }> = ({
   children,
   className,
+  gridLayout = false,
 }) => {
   return (
-    <CardContent className={className}>
+    <CardContent className={className} style={gridLayout ? { display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '8px', alignItems: 'center' } : undefined}>
       {children}
     </CardContent>
   );

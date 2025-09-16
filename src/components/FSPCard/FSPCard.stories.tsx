@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { FSPCard, FSPCardHeader, FSPCardContent, FSPCardInfo, FSPCardLabel, InfoIcon } from './FSPCard';
+import { FSPCard, FSPCardHeader, FSPCardInfo, FSPCardLabel, InfoIcon } from './FSPCard';
 import { FSPButton } from '../FSPButton/FSPButton';
 import { FSPTypography } from '../FSPTypography/FSPTypography';
 import { FSPChip } from '../FSPChip/FSPChip';

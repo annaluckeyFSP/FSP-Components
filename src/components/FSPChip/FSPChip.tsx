@@ -92,7 +92,9 @@ const getChipStyles = (variant: FSPChipProps['variant'], shape: FSPChipProps['sh
   `;
 };
 
-const StyledChip = styled.span<FSPChipProps>`
+const StyledChip = styled.span.withConfig({
+  shouldForwardProp: (prop) => !['variant', 'shape', 'size', 'disabled', 'removable', 'count'].includes(prop),
+})<FSPChipProps>`
   ${({ variant, shape, size }) => getChipStyles(variant, shape, size)}
   
   &:hover:not(.transparent) {

@@ -34,7 +34,9 @@ const ContentContainer = styled.div`
   /* No margin needed - breadcrumb is positioned above */
 `;
 
-const BreadcrumbLink = styled.a<{
+const BreadcrumbLink = styled.a.withConfig({
+  shouldForwardProp: (prop) => !['onClick'].includes(prop),
+})<{
   onClick?: () => void;
 }>`
   display: flex;
