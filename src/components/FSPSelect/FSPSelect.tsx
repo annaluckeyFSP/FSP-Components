@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
 export interface FSPSelectProps {
@@ -58,7 +58,9 @@ export interface SelectGroup {
   options: SelectOption[];
 }
 
-const SelectContainer = styled.div<{ 
+const SelectContainer = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['fullWidth', 'labelPosition', 'displayInline', 'noMarginTop', 'noMarginBottom'].includes(prop),
+})<{ 
   fullWidth?: boolean; 
   labelPosition?: string;
   displayInline?: boolean;
@@ -81,7 +83,9 @@ const SelectContainer = styled.div<{
   }
 `;
 
-const Label = styled.label<{ 
+const Label = styled.label.withConfig({
+  shouldForwardProp: (prop) => !['size', 'required', 'disabled', 'error', 'position'].includes(prop),
+})<{ 
   size?: string; 
   required?: boolean; 
   disabled?: boolean;
@@ -193,7 +197,9 @@ const CustomSelect = styled.div.withConfig({
   }
 `;
 
-const SelectTrigger = styled.div<{
+const SelectTrigger = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['disabled', 'grayBackground', 'grayWhenDisabled'].includes(prop),
+})<{
   disabled?: boolean;
   grayBackground?: boolean;
   grayWhenDisabled?: boolean;
@@ -214,14 +220,18 @@ const SelectTrigger = styled.div<{
   `}
 `;
 
-const SelectValue = styled.span<{
+const SelectValue = styled.span.withConfig({
+  shouldForwardProp: (prop) => !['placeholder'].includes(prop),
+})<{
   placeholder?: boolean;
 }>`
   flex: 1;
   color: ${props => props.placeholder ? 'var(--gray2, #8c8c8c)' : 'inherit'};
 `;
 
-const SelectArrow = styled.div<{
+const SelectArrow = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['isOpen', 'disabled'].includes(prop),
+})<{
   isOpen?: boolean;
   disabled?: boolean;
 }>`
@@ -242,7 +252,9 @@ const SelectArrow = styled.div<{
   `}
 `;
 
-const Dropdown = styled.div<{
+const Dropdown = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['isOpen'].includes(prop),
+})<{
   isOpen?: boolean;
 }>`
   position: absolute;
@@ -259,7 +271,9 @@ const Dropdown = styled.div<{
   display: ${props => props.isOpen ? 'block' : 'none'};
 `;
 
-const Option = styled.div<{
+const Option = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['selected', 'disabled', 'isGroupHeader'].includes(prop),
+})<{
   selected?: boolean;
   disabled?: boolean;
   isGroupHeader?: boolean;
@@ -337,15 +351,6 @@ const Error = styled.div`
   font-family: var(--mainFont, 'Roboto', Arial, Helvetica, sans-serif);
 `;
 
-const Suffix = styled.span`
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 12px;
-  color: var(--gray1, #595959);
-  pointer-events: none;
-`;
 
 export const FSPSelect: React.FC<FSPSelectProps> = ({
   value,
@@ -374,7 +379,6 @@ export const FSPSelect: React.FC<FSPSelectProps> = ({
   errorStateFromParent = false,
   className,
   id,
-  name,
   cypressSelector = 'fsp-select'
 }) => {
   const [internalValue, setInternalValue] = useState(value);
@@ -448,7 +452,7 @@ export const FSPSelect: React.FC<FSPSelectProps> = ({
               onClick={() => !option.disabled && handleChange(
                 multiple 
                   ? (internalValue || []).includes(option.value)
-                    ? (internalValue || []).filter(v => v !== option.value)
+                    ? (internalValue || []).filter((v: any) => v !== option.value)
                     : [...(internalValue || []), option.value]
                   : option.value
               )}
@@ -468,7 +472,7 @@ export const FSPSelect: React.FC<FSPSelectProps> = ({
         onClick={() => !option.disabled && handleChange(
           multiple 
             ? (internalValue || []).includes(option.value)
-              ? (internalValue || []).filter(v => v !== option.value)
+              ? (internalValue || []).filter((v: any) => v !== option.value)
               : [...(internalValue || []), option.value]
             : option.value
         )}

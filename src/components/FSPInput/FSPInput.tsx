@@ -123,7 +123,9 @@ const Label = styled.label<{
   }
 `;
 
-const InputWrapper = styled.div<{ 
+const InputWrapper = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['fullWidth', 'hasError', 'disabled', 'grayWhenDisabled', 'hasPrefix', 'hasSuffix'].includes(prop),
+})<{ 
   fullWidth?: boolean;
   hasError?: boolean;
   disabled?: boolean;

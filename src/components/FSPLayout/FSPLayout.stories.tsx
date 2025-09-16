@@ -4,7 +4,7 @@ import { FSPButton } from '../FSPButton/FSPButton';
 import { FSPPageHeader } from '../FSPPageHeader/FSPPageHeader';
 import { FSPContainer } from '../FSPContainer/FSPContainer';
 import { FSPBreadcrumb, FSPBreadcrumbWrapper } from '../FSPBreadcrumb/FSPBreadcrumb';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const meta: Meta<typeof FSPLayout> = {
   title: 'FSP/Layout',
@@ -39,7 +39,7 @@ const SidebarContent = () => (
   </div>
 );
 
-const HeaderContent = ({ onToggleSidebar, sidebarOpen }: { onToggleSidebar?: () => void; sidebarOpen?: boolean }) => (
+const HeaderContent = ({ onToggleSidebar }: { onToggleSidebar?: () => void; sidebarOpen?: boolean }) => (
   <div style={{ 
     display: 'flex', 
     justifyContent: 'space-between', 

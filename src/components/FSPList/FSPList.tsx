@@ -210,7 +210,6 @@ export const FSPList: React.FC<FSPListProps> = ({
   variant = 'default',
   className,
   onItemClick,
-  onItemAction,
 }) => {
   const handleItemClick = (item: ListItem, index: number) => {
     if (item.onClick) {
