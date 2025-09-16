@@ -493,9 +493,9 @@ export const FSPSelect: React.FC<FSPSelectProps> = ({
         <Label
           htmlFor={id}
           size={labelSize}
-          required={required}
-          disabled={disabled}
-          error={showError}
+          required={!!required}
+          disabled={!!disabled}
+          error={!!showError}
           position={labelPosition}
         >
           {required && <span className="required-asterisk">*</span>}
@@ -504,21 +504,21 @@ export const FSPSelect: React.FC<FSPSelectProps> = ({
       )}
       
       <SelectWrapper
-        fullWidth={fullWidth}
-        hasError={showError}
-        disabled={disabled}
-        grayBackground={grayBackground}
-        grayWhenDisabled={grayWhenDisabled}
-        removeMinWidth={removeMinWidth}
-        preventFullWidthOnMobile={preventFullWidthOnMobile}
+        fullWidth={!!fullWidth}
+        hasError={!!showError}
+        disabled={!!disabled}
+        grayBackground={!!grayBackground}
+        grayWhenDisabled={!!grayWhenDisabled}
+        removeMinWidth={!!removeMinWidth}
+        preventFullWidthOnMobile={!!preventFullWidthOnMobile}
       >
         <CustomSelect
           ref={selectRef}
-          hasError={showError}
-          disabled={disabled}
-          grayBackground={grayBackground}
-          grayWhenDisabled={grayWhenDisabled}
-          isOpen={isOpen}
+          hasError={!!showError}
+          disabled={!!disabled}
+          grayBackground={!!grayBackground}
+          grayWhenDisabled={!!grayWhenDisabled}
+          isOpen={!!isOpen}
           tabIndex={disabled || loading ? -1 : 0}
           onFocus={handleFocus}
           onBlur={handleBlur}
